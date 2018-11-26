@@ -1,0 +1,11 @@
+body{background:#333;}
+
+#canvas_container{
+    margin: 20px auto;
+}
+
+#gameCanvas{
+    width: 1280;
+    background-color: bisque;
+    border-radius: .6em;
+}
