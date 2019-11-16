@@ -161,7 +161,6 @@ function initialize() {
     });
   },
     function (xhr) {
-      console.log((xhr.loaded / xhr.total * 100));
       if ((xhr.loaded / xhr.total * 100) == 100) {
         model1 = true;
         console.log('model1: ' + model1);
@@ -318,7 +317,7 @@ function animate() {
   deltaTime = clock.getDelta();
   totalTime += deltaTime;
 
-  if (audio1 && audio2 && model1 && model2 && model3) {
+  if (audio1 && audio2) {
     update();
     render();
   }
