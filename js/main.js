@@ -16,8 +16,6 @@ let mixerArbol, mixerArbolText;
 let soundArbol;
 let audioArbol = true;
 let Arbol, ArbolText;
-let arbolAnimation, arbolTextAnimation;
-let animArbol = true;
 let arbolActive = false;
 //
 
@@ -26,8 +24,6 @@ let mixerQueso;
 let soundQueso;
 let audioQueso = true;
 let Queso;
-let quesoAnimation;
-let animQueso = true;
 let quesoActive = false;
 let end = false;
 //
@@ -39,7 +35,7 @@ let model1 = false;
 let model2 = false;
 let model3 = false;
 
-var loader = new GLTFLoader();
+let loader = new GLTFLoader();
 
 initialize();
 animate();
@@ -50,13 +46,7 @@ window['Arbol'] = Arbol;
 function initialize() {
   scene = new THREE.Scene();
 
-  // var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.3);
-  // hemiLight.color.setHSL(0.6, 1, 0.6);
-  // hemiLight.groundColor.setHSL(0.095, 1, 0.75);
-  // hemiLight.position.set(0, 20, 0);
-  // scene.add(hemiLight);
-
-  var dirLight = new THREE.DirectionalLight(0xffffff, 1);
+  let dirLight = new THREE.DirectionalLight(0xffffff, 1);
   dirLight.color.setHSL(0.1, 1, 0.95);
   dirLight.position.set(- 1, 1.75, 1);
   dirLight.position.multiplyScalar(30);
@@ -64,13 +54,6 @@ function initialize() {
 
   let ambientLight = new THREE.AmbientLight(0xcccccc, 0.8);
   scene.add(ambientLight);
-
-  // var light = new THREE.HemisphereLight(0xffffff, 0x444444);
-  // light.position.set(0, 20, 0);
-  // scene.add(light);
-  // var light = new THREE.DirectionalLight(0xffffff);
-  // light.position.set(0, 20, 10);
-  // scene.add(light);
 
   camera = new THREE.Camera();
   scene.add(camera);
@@ -152,6 +135,7 @@ function initialize() {
     function (xhr) {
       if ((xhr.loaded / xhr.total * 100) == 100) {
         audio1 = true;
+        console.log('audio1: ' + audio1);
       }
     },
     function (error) {
@@ -168,7 +152,6 @@ function initialize() {
   loader.load('./models/arbol/ArbolFull.glb', function (gltf) {
     const model = gltf.scene;
     Arbol.add(model);
-    arbolAnimation = gltf;
     mixerArbol = new THREE.AnimationMixer(model);
     gltf.animations.forEach((clip) => {
       mixerArbol.clipAction(clip).setLoop(1, 1);
@@ -180,6 +163,7 @@ function initialize() {
     function (xhr) {
       if ((xhr.loaded / xhr.total * 100) == 100) {
         model1 = true;
+        console.log('model1: ' + model1);
       }
     },
     function (error) {
@@ -206,6 +190,7 @@ function initialize() {
     function (xhr) {
       if ((xhr.loaded / xhr.total * 100) == 100) {
         model2 = true;
+        console.log('model2: ' + model2);
       }
     },
     function (error) {
@@ -231,6 +216,7 @@ function initialize() {
     function (xhr) {
       if ((xhr.loaded / xhr.total * 100) == 100) {
         audio2 = true;
+        console.log('audio2: ' + audio2);
       }
     },
     function (error) {
@@ -247,7 +233,6 @@ function initialize() {
   loader.load('./models/queso/Queso.glb', function (gltf) {
     const model = gltf.scene;
     Queso.add(model);
-    quesoAnimation = gltf;
     mixerQueso = new THREE.AnimationMixer(model);
     gltf.animations.forEach((clip) => {
       mixerQueso.clipAction(clip).setLoop(1, 1);
@@ -267,6 +252,7 @@ function initialize() {
     function (xhr) {
       if ((xhr.loaded / xhr.total * 100) == 100) {
         model3 = true;
+        console.log('model3: ' + model3);
       }
     },
     function (error) {
@@ -279,8 +265,8 @@ function initialize() {
 }
 
 function update() {
-  if (arToolkitSource.ready !== false)
-    arToolkitContext.update(arToolkitSource.domElement);
+  if (arToolkitSource.ready !== false) arToolkitContext.update(arToolkitSource.domElement);
+
   if (markerRoot1.visible) {
     arbolActive = true;
     if (!soundArbol.isPlaying && audioArbol) {
@@ -307,7 +293,6 @@ function update() {
 
 }
 
-
 function render() {
   if (arbolActive) {
     if (mixerArbol != null) {
@@ -326,7 +311,6 @@ function render() {
   }
   renderer.render(scene, camera);
 }
-
 
 function animate() {
   requestAnimationFrame(animate);
