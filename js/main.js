@@ -32,6 +32,13 @@ let quesoActive = false;
 let end = false;
 //
 
+//loads
+let audio1 = false;
+let audio2 = false;
+let model1 = false;
+let model2 = false;
+let model3 = false;
+
 var loader = new GLTFLoader();
 
 initialize();
@@ -141,7 +148,15 @@ function initialize() {
     soundArbol.setLoop(false);
     soundArbol.setVolume(1);
     // soundArbol.play();
-  });
+  },
+    function (xhr) {
+      if ((xhr.loaded / xhr.total * 100) == 100) {
+        audio1 = true;
+      }
+    },
+    function (error) {
+      console.log('An error happened');
+    });
 
   markerRoot1 = new THREE.Group();
   scene.add(markerRoot1);
@@ -161,7 +176,15 @@ function initialize() {
       // mixerArbol.clipAction(clip).startAt(1);
       mixerArbol.clipAction(clip).play();
     });
-  });
+  },
+    function (xhr) {
+      if ((xhr.loaded / xhr.total * 100) == 100) {
+        model1 = true;
+      }
+    },
+    function (error) {
+      console.log('An error happened');
+    });
 
   ArbolText = new THREE.Object3D();
   loader.load('./models/arbol/ArbolTexto.glb', function (gltf) {
@@ -179,7 +202,15 @@ function initialize() {
       audioArbol = false;
       document.getElementById('boton').style.display = 'block';
     });
-  });
+  },
+    function (xhr) {
+      if ((xhr.loaded / xhr.total * 100) == 100) {
+        model2 = true;
+      }
+    },
+    function (error) {
+      console.log('An error happened');
+    });
   //
 
   ArbolText.position.x = 2.26;
@@ -196,7 +227,15 @@ function initialize() {
     soundQueso.setLoop(false);
     soundQueso.setVolume(1);
     // soundQueso.play();
-  });
+  },
+    function (xhr) {
+      if ((xhr.loaded / xhr.total * 100) == 100) {
+        audio2 = true;
+      }
+    },
+    function (error) {
+      console.log('An error happened');
+    });
 
   markerRoot2 = new THREE.Group();
   scene.add(markerRoot2);
@@ -224,7 +263,15 @@ function initialize() {
       }
       end = true;
     });
-  });
+  },
+    function (xhr) {
+      if ((xhr.loaded / xhr.total * 100) == 100) {
+        model3 = true;
+      }
+    },
+    function (error) {
+      console.log('An error happened');
+    });
 
   Queso.scale.set(0.5, 0.5, 0.5);
   markerRoot2.add(Queso);
@@ -262,15 +309,6 @@ function update() {
 
 
 function render() {
-  renderer.render(scene, camera);
-}
-
-
-function animate() {
-  requestAnimationFrame(animate);
-  deltaTime = clock.getDelta();
-  totalTime += deltaTime;
-
   if (arbolActive) {
     if (mixerArbol != null) {
       mixerArbol.update(deltaTime);
@@ -286,7 +324,17 @@ function animate() {
       mixerQueso.update(deltaTime);
     };
   }
+  renderer.render(scene, camera);
+}
 
-  update();
-  render();
+
+function animate() {
+  requestAnimationFrame(animate);
+  deltaTime = clock.getDelta();
+  totalTime += deltaTime;
+
+  if (audio1 && audio2 && model1 && model2 && model3) {
+    update();
+    render();
+  }
 }
