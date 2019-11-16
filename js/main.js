@@ -161,6 +161,7 @@ function initialize() {
     });
   },
     function (xhr) {
+      console.log((xhr.loaded / xhr.total * 100));
       if ((xhr.loaded / xhr.total * 100) == 100) {
         model1 = true;
         console.log('model1: ' + model1);
