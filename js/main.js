@@ -31,17 +31,11 @@ let end = false;
 //loads
 let audio1 = false;
 let audio2 = false;
-let model1 = false;
-let model2 = false;
-let model3 = false;
 
 let loader = new GLTFLoader();
 
 initialize();
 animate();
-
-window['Arbol'] = Arbol;
-
 
 function initialize() {
   scene = new THREE.Scene();
@@ -135,7 +129,7 @@ function initialize() {
     function (xhr) {
       if ((xhr.loaded / xhr.total * 100) == 100) {
         audio1 = true;
-        console.log('audio1: ' + audio1);
+        // console.log('audio1: ' + audio1);
       }
     },
     function (error) {
@@ -159,16 +153,7 @@ function initialize() {
       // mixerArbol.clipAction(clip).startAt(1);
       mixerArbol.clipAction(clip).play();
     });
-  },
-    function (xhr) {
-      if ((xhr.loaded / xhr.total * 100) == 100) {
-        model1 = true;
-        console.log('model1: ' + model1);
-      }
-    },
-    function (error) {
-      console.log('An error happened');
-    });
+  });
 
   ArbolText = new THREE.Object3D();
   loader.load('./models/arbol/ArbolTexto.glb', function (gltf) {
@@ -184,18 +169,8 @@ function initialize() {
     mixerArbolText.addEventListener('finished', function (e) {
       // console.log('Termino arbol');
       audioArbol = false;
-      document.getElementById('boton').style.display = 'block';
     });
-  },
-    function (xhr) {
-      if ((xhr.loaded / xhr.total * 100) == 100) {
-        model2 = true;
-        console.log('model2: ' + model2);
-      }
-    },
-    function (error) {
-      console.log('An error happened');
-    });
+  });
   //
 
   ArbolText.position.x = 2.26;
@@ -216,7 +191,7 @@ function initialize() {
     function (xhr) {
       if ((xhr.loaded / xhr.total * 100) == 100) {
         audio2 = true;
-        console.log('audio2: ' + audio2);
+        // console.log('audio2: ' + audio2);
       }
     },
     function (error) {
@@ -244,20 +219,10 @@ function initialize() {
       // console.log('Termino queso');
       if (end) {
         audioQueso = false;
-        document.getElementById('boton').style.display = 'block';
       }
       end = true;
     });
-  },
-    function (xhr) {
-      if ((xhr.loaded / xhr.total * 100) == 100) {
-        model3 = true;
-        console.log('model3: ' + model3);
-      }
-    },
-    function (error) {
-      console.log('An error happened');
-    });
+  });
 
   Queso.scale.set(0.5, 0.5, 0.5);
   markerRoot2.add(Queso);
@@ -289,6 +254,10 @@ function update() {
     if (soundQueso.isPlaying) {
       soundQueso.pause();
     }
+  }
+
+  if (!soundArbol.isPlaying && !audioArbol || !soundQueso.isPlaying && !audioQueso) {
+    document.getElementById('boton').style.display = 'block';
   }
 
 }
