@@ -136,7 +136,7 @@ function initialize() {
 
   soundArbol = new THREE.Audio(listener);
 
-  audioLoader.load('../sounds/AlpinaArbol.wav', function (buffer) {
+  audioLoader.load('./sounds/AlpinaArbol.wav', function (buffer) {
     soundArbol.setBuffer(buffer);
     soundArbol.setLoop(false);
     soundArbol.setVolume(1);
@@ -150,7 +150,7 @@ function initialize() {
   })
 
   Arbol = new THREE.Object3D();
-  loader.load('../models/arbol/ArbolFull.glb', function (gltf) {
+  loader.load('./models/arbol/ArbolFull.glb', function (gltf) {
     const model = gltf.scene;
     Arbol.add(model);
     arbolAnimation = gltf;
@@ -164,7 +164,7 @@ function initialize() {
   });
 
   ArbolText = new THREE.Object3D();
-  loader.load('../models/arbol/ArbolTexto.glb', function (gltf) {
+  loader.load('./models/arbol/ArbolTexto.glb', function (gltf) {
     const model = gltf.scene;
     ArbolText.add(model);
     mixerArbolText = new THREE.AnimationMixer(model);
@@ -191,7 +191,7 @@ function initialize() {
 
   soundQueso = new THREE.Audio(listener);
 
-  audioLoader.load('../sounds/AlpinaQueso.wav', function (buffer) {
+  audioLoader.load('./sounds/AlpinaQueso.wav', function (buffer) {
     soundQueso.setBuffer(buffer);
     soundQueso.setLoop(false);
     soundQueso.setVolume(1);
@@ -205,7 +205,7 @@ function initialize() {
   })
 
   Queso = new THREE.Object3D();
-  loader.load('../models/queso/Queso.glb', function (gltf) {
+  loader.load('./models/queso/Queso.glb', function (gltf) {
     const model = gltf.scene;
     Queso.add(model);
     quesoAnimation = gltf;
